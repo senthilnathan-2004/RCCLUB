@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { Suspense, useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
@@ -38,7 +38,7 @@ const mockEvents = [
   { id: "5", name: "Career Guidance Session" },
 ]
 
-export default function SubmitExpensePage() {
+function SubmitExpenseContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [events, setEvents] = useState([])
@@ -350,5 +350,17 @@ export default function SubmitExpensePage() {
         </Card>
       </div>
     </div>
+  )
+}
+
+export default function SubmitExpensePage() {
+  return (
+    <Suspense fallback={
+       <div className="flex items-center justify-center h-64">
+         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+       </div>
+    }>
+      <SubmitExpenseContent />
+    </Suspense>
   )
 }

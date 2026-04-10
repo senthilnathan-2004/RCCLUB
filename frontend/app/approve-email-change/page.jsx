@@ -1,12 +1,12 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import api from "@/lib/api"
 
-export default function ApproveEmailChangePage() {
+function ApproveEmailChangeContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const [status, setStatus] = useState("loading")
@@ -50,6 +50,18 @@ export default function ApproveEmailChangePage() {
         </CardContent>
       </Card>
     </div>
+  )
+}
+
+export default function ApproveEmailChangePage() {
+  return (
+    <Suspense fallback={
+       <div className="min-h-screen flex items-center justify-center">
+         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+       </div>
+    }>
+      <ApproveEmailChangeContent />
+    </Suspense>
   )
 }
 
