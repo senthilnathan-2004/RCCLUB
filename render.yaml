@@ -1,0 +1,42 @@
+services:
+  # Backend Service
+  - type: web
+    name: rotaract-backend
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        sync: false # Set in Render Dashboard
+      - key: JWT_SECRET
+        sync: false # Set in Render Dashboard
+      - key: CLOUDINARY_NAME
+        sync: false # Set in Render Dashboard
+      - key: CLOUDINARY_API_KEY
+        sync: false # Set in Render Dashboard
+      - key: CLOUDINARY_API_SECRET
+        sync: false # Set in Render Dashboard
+      - key: FRONTEND_URL
+        sync: false # Set to your frontend URL after deployment
+      - key: ALLOWED_ORIGINS
+        sync: false # Set to your frontend URL after deployment
+
+  # Frontend Service (Static Site)
+  - type: web
+    name: rotaract-frontend
+    env: node
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        sync: false # Set to your backend URL/api after deployment
+      - key: NODE_ENV
+        value: production
